@@ -19,5 +19,4 @@ var counter_4col = $('#counter-4col').waypoint({
 	},
 	offset: '90%'
     });
-
 });

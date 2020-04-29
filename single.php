@@ -22,6 +22,7 @@
     <!--Favicon -->
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     <!--END -->
+
 </head>
 
 <body class="light-page">

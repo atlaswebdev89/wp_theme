@@ -78,12 +78,13 @@ $('.single-image-popup').magnificPopup({
 
 
 //Активный пункт меню
-$('#navbar a').each(function() {
-    var url = window.location.pathname;
-    var index = $(this).attr('href');    
+jQuery('#navbar a').each(function() {
+    var url = window.location.href;
+    var index = $(this).attr('href');  
     
-    if (index == '/' && index == url){    
+    if (index == url){       
         $(this).addClass('active_menu');
+ 
     }else if (index == '/') {
         index = '/index/';
     } 

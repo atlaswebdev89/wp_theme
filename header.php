@@ -6,12 +6,9 @@
 
     <meta name="keywords" content="Мебель под заказ Брест, изготовление корпусной мебели, производство мебели по индивиальным проектам, мебель из дсп и мдф, заказать мебель" />
     <meta name="description" content="В NKN-мебель можно заказать изготовление любой корпусной мебели под индивидуальные размеры: кухни, шкафы-купе, мебель для детских и гардеробных комнат." />
-
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
     <meta name="robots" content="index, follow"/>
-    <!-- Common  Style-->
-
+    
     <!--Favicon -->
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     <!--END -->
@@ -39,25 +36,28 @@
                 <a href="/"><img src="/images/logo.png" alt="Логотип" class=""></a>
             </div>
         </div>
+        <!-- Block menu -->
+            <?php wp_nav_menu(array(
+                                        'theme_location'  => 'main_menu',     // (string) Расположение меню в шаблоне. (указывается ключ которым было зарегистрировано меню в функции
+                                        'menu'            => '',              // (string) Название выводимого меню (указывается в админке при создании меню, приоритетнее чем указанное местоположение theme_location - если указано, то параметр theme_location игнорируется)
+                                        'container'       => 'div',           // (string) Контейнер меню. Обворачиватель ul. Указывается тег контейнера (по умолчанию в тег div)
+                                        'container_class' => 'navbar-collapse collapse',              // (string) class контейнера (div тега)
+                                        'container_id'    => 'navbar',        // (string) id контейнера (div тега)
+                                        'menu_class'      => 'nav navbar-nav navbar-right',          // (string) class самого меню (ul тега)
+                                        'menu_id'         => '',              // (string) id самого меню (ul тега)
+                                        'echo'            => true,            // (boolean) Выводить на экран или возвращать для обработки
+                                        'fallback_cb'     => 'wp_page_menu',  // (string) Используемая (резервная) функция, если меню не существует (не удалось получить)
+                                        'before'          => '',              // (string) Текст перед <a> каждой ссылки
+                                        'after'           => '',              // (string) Текст после </a> каждой ссылки
+                                        'link_before'     => '<span>',              // (string) Текст перед анкором (текстом) ссылки
+                                        'link_after'      => '</span>',              // (string) Текст после анкора (текста) ссылки
+                                        'items_wrap'      => '<ul class="%2$s">%3$s</ul>',
+                                        'depth'           => 0,               // (integer) Глубина вложенности (0 - неограничена, 2 - двухуровневое меню)
+                                    )
+                    );
+            ?>                
+        <!-- End Block Menu -->
 
-        <div id="navbar" role="navigation" class="navbar-collapse collapse" aria-expanded="false" style="height: 0px;">
-            <ul class="nav navbar-nav navbar-right">
-                <li class=""><a href="/"><span>Главная</span></a></li>
-                <li class=""><a target="_self" class="smooth" href="/catalog/"><i class="icon-chevron-down-bold icon-color icon-position-left icon-size-m"></i><span>Каталог</span></a>
-                    <ul class="sub-menu">
-                        <li><a href="/catalog/kuhni/"><span>Кухни</span></a></li>
-                        <li><a href="/catalog/shkaf/"><span>Шкафы купе</span></a></li>
-                        <li><a href="/catalog/garderobnya/"><span>Гардеробные</span></a></li>
-                        <li><a href="/catalog/office/"><span>Офисная мебель</span></a></li>
-                        <li><a href="/catalog/detskie/"><span>Детские</span></a></li>
-                        <li><a href="/catalog/drugay-mebel/"><span>Другая мебель</span></a></li>
-                    </ul>
-                </li>
-                <li class=""><a href="/service/"><span>Услуги и цены</span></a></li>
-                <li class=""><a href="/about/"><span>О нас</span></a></li>
-                <li class=""><a href="/contact/"><span>Контакты</span></a></li>
-            </ul>
-        </div>
     </div>
     <div class="nav-bg light"></div>
 </nav>
