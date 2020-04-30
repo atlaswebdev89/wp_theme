@@ -25,11 +25,11 @@
 <!-- Modal -->
 <div class="modal-container">
     <!--Modal Call -->
-    <?php include 'layots/modal_request_call.html';?>
+    <?php get_template_part('modal/request_call');?>
     <!--End Modal Call -->
 
     <!--Modal Message -->
-    <?php include 'layots/modal_message.html';?>
+    <?php get_template_part('modal/message');?>
     <!--End Modal Message -->
 </div>
 

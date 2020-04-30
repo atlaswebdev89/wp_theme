@@ -1,5 +1,32 @@
 <?php get_header(); ?>
+<div id="wrap">
+    <header id="header-slogan-modal-2" class="dark pt-300 pb-200 text-left">
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-12">
+                    <h1 class="" data-aos="fade-down" data-aos-easing="none" data-aos-duration="500" data-aos-delay="0" style="color: #82b3f9;">
+                        <strong><?php bloginfo('name');?>   </strong>
+                    </h1>
+                    <h2 data-aos="fade-down" data-aos-easing="none" data-aos-duration="500" data-aos-delay="0"><em>по индивидуальным проектам в Бресте </em></h2>
+                    <h3 data-aos="fade-right" data-aos-easing="none" data-aos-duration="500" data-aos-delay="0" style=""> Изготавливаем: <br/>
+                        - кухни  <br/>
+                        - шкафы купе  <br/>
+                        - гардеробные  <br/>
+                        - мебель для детской комнаты <br/>
+                        - мебель для офисных помещений  <br/>
+                        - полки  <br/>
+                        - стеллажи
+                    </h3>
 
+                    <h3 data-aos="fade-left" data-aos-easing="none" data-aos-duration="500" data-aos-delay="0">При заказе кухни скидка на шкафы-купе <strong style="color: #ff0000;">10%</strong> </h3>
+                    <a class="btn-primary btn btn-lg" data-aos="fade-up" data-aos-easing="none" data-aos-duration="500" data-aos-delay="0" href="#" data-toggle="modal" data-target="#message_form"><span><strong><i class="icon-pencil22 icon-color"></i> Оставить заявку</strong></span></a>
+                    <a class="btn-default btn btn-lg" data-aos="fade-up" data-aos-easing="none" data-aos-duration="500" data-aos-delay="0" href="/catalog/"><span>Смотреть каталог мебели</span></a>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+        <div class="bg"></div>
+    </header>
 <section id="desc-tabs" class="pt-100 pb-125 text-center light">
         <div class="container">
             <h2 class="mb-50">Производство мебели на заказ</h2>
@@ -125,7 +152,7 @@
                     <a href="/catalog/kuhni/" class="btn btn-default mt-60"><span>Перейти в каталог</span><i class="icon-arrow-right icon-position-right"></i></a>
                 </div>
                 <div class="col-md-8 col-md-pull-4 text-center" data-aos="fade-right" data-aos-easing="none" data-aos-duration="500" data-aos-delay="0">
-                    <img src="images/kuhnya-mainpage.jpeg" alt="Фото кухни" class="screen">
+                    <img src="<?php bloginfo('template_url');?>/assets/images/kuhnya-mainpage.jpeg" alt="Фото кухни" class="screen">
                 </div>
             </div>
         </div>
@@ -163,7 +190,7 @@
                     <a href="/catalog/shkaf/" class="btn btn-default mt-60"><span>Перейти в каталог</span><i class="icon-arrow-right icon-position-right"></i></a>
                 </div>
                 <div class="col-md-8 text-center" data-aos="fade-left" data-aos-easing="none" data-aos-duration="500" data-aos-delay="0">
-                    <img src="images/kupe-mainpage.jpeg" alt="фото шкафа" class="screen">
+                    <img src="<?php bloginfo('template_url');?>/assets/images/kupe-mainpage.jpeg" alt="фото шкафа" class="screen">
                 </div>
             </div>
         </div>
@@ -196,7 +223,7 @@
                     <a href="/catalog/garderobnya/" class="btn btn-default mt-60"><span>Перейти в каталог</span><i class="icon-arrow-right icon-position-right"></i></a>
                 </div>
                 <div class="col-md-8 col-md-pull-4 text-center" data-aos="fade-right" data-aos-easing="none" data-aos-duration="500" data-aos-delay="0">
-                    <img src="images/garderobnaja-mainpage.jpeg" alt="фото гардеробной" class="screen">
+                    <img src="<?php bloginfo('template_url');?>/assets/images/garderobnaja-mainpage.jpeg" alt="фото гардеробной" class="screen">
                 </div>
             </div>
         </div>
@@ -236,7 +263,7 @@
                     			</span>
                         <p>Заказывал кухню. Сделали все очень качествено и что, не мало важно, быстро. Остался очень доволен. </p>
                         <div class="card-author">
-                            <img src="images/photo-small-3.png"  alt="Photo">
+                            <img src="<?php bloginfo('template_url');?>/assets/images/photo-small-3.png"  alt="Photo">
                             <small>Дмитрий</small>
                         </div>
                     </div>
@@ -253,7 +280,7 @@
                             Привезли и смонтировали, мастера за собой убрали.
                             Остался доволен. Думаю заказать еще мебель.</p>
                         <div class="card-author">
-                            <img src="images/photo-small-6.png"  alt="Photo">
+                            <img src="<?php bloginfo('template_url');?>/assets/images/photo-small-6.png"  alt="Photo">
                             <small>Анастасия</small>
                         </div>
                     </div>

@@ -54,18 +54,23 @@ add_action( 'wp_enqueue_scripts', 'niko_register_scripts' );
  * Register Menu
  */
 if (function_exists('register_nav_menu')) {
-  register_nav_menus(array(
-    'main_menu' => 'Главное меню',
-    'sidebar_menu' => 'Меню Сайдбар',
-  ));
+      register_nav_menus(array(
+            'main_menu' => 'Главное меню',
+            'sidebar_menu' => 'Меню Сайдбар',
+      ));
 }
-
+//Кастомизация элементов меню
 add_filter( 'nav_menu_css_class', 'change_menu_item_css_classes', 10, 4 );
 function change_menu_item_css_classes($classes) {
 	return $classes[] ='';
 }
 add_filter( 'nav_menu_item_id', '__return_empty_string' );
 
-
+// Подключение необходимых элементов управления темой
+function atlas_theme_support(){
+        add_theme_support('custom-logo');
+        add_theme_support('post-thumbnails');
+}
+add_action( 'after_setup_theme', 'atlas_theme_support' );
 
 
