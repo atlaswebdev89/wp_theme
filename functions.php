@@ -50,6 +50,31 @@ function niko_register_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'niko_register_scripts' );
 
+
+/**
+ * Подключение FancyBox для страниц каталога
+ */
+add_action( 'wp_enqueue_scripts', 'niko_register_fancy' );
+function niko_register_fancy () {
+    if(is_page_template('foto-items.php')){
+        wp_enqueue_style('fancy', "https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" ,array(),null);
+        wp_enqueue_script( 'fancy2', "https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js", array('jquery'), '', true );
+    }
+}
+
+/**
+* Подключение скиптов для старницы О нас
+ */
+add_action( 'wp_enqueue_scripts', 'niko_register_count' );
+function niko_register_count () {
+    if (is_page('about')) {
+        wp_enqueue_script('waypoints', get_template_directory_uri() ."/assets/js/jquery.waypoints.min.js", array('jquery'), null, true );
+        wp_enqueue_script( 'countUp', get_template_directory_uri() ."/assets/js/countUp-jquery.js", array('jquery'), null, true );
+        wp_enqueue_script( 'about', get_template_directory_uri() ."/assets/js/about.js", array('jquery'), null, true );
+    }
+}
+
+
 /**
  * Register Menu
  */
@@ -73,4 +98,46 @@ function atlas_theme_support(){
 }
 add_action( 'after_setup_theme', 'atlas_theme_support' );
 
+//Функция добавляения шорткода в любое поле ACF
+function root_acf_format_value( $value, $post_id, $field ) {
+	
+	$value = do_shortcode($value);
+	
+	return $value;
+}
+add_filter('acf/format_value', 'root_acf_format_value', 10, 3);
 
+//Отключить пагинацию
+function custom_redirect_pagination_page() {
+   if(is_paged() && !is_category()) {
+      wp_redirect(get_permalink(), 301);
+   }
+}
+add_action('template_redirect', 'custom_redirect_pagination_page');
+
+//Функция от дублей страниц с числами в конце URL
+    global $posts, $numpages;
+    $request_uri = $_SERVER['REQUEST_URI'];
+    $result = preg_match('%\/(\d)+(\/)?$%', $request_uri, $matches);
+    $ordinal = $result ? intval($matches[1]) : FALSE;
+    if(is_numeric($ordinal)) {
+        setup_postdata($posts[0]); // yes, hack
+        $redirect_to = ($ordinal < 2) ? '/': (($ordinal > $numpages) ? "/$numpages/" : FALSE);
+        if(is_string($redirect_to)) {
+
+            // we got us a phantom
+            $redirect_url = get_option('home') . preg_replace('%'.$matches[0].'%', $redirect_to, $request_uri);
+            $redirect_url = rtrim($redirect_url, '/');
+            // if page = 0 or 1, redirect permanently
+            if($ordinal < 2) {
+                header($_SERVER['SERVER_PROTOCOL'] . ' 301 Moved Permanently');
+            } else {
+                header($_SERVER['SERVER_PROTOCOL'] . ' 302 Found');
+            }
+                header("Location: $redirect_url");
+                exit();
+        }
+    }
+// END function
+
+    

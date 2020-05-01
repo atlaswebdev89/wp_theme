@@ -6,7 +6,7 @@ Template Name: Шаблон страницы КАТАЛОГ
 <?php get_header();?>
     <div id="wrap">
     <section id="gallery-list-4col-2" class="light pt-200 pb-md-50 text-left">
-        <div class="container">
+        <div class="container text-center">
             <div class="row">
                 <div class="header-h1">
                     <h1 class="text-center pt-125" data-aos="fade-down" data-aos-easing="none" data-aos-duration="500" data-aos-delay="0">Каталог проектов мебели</h1>
@@ -23,22 +23,25 @@ Template Name: Шаблон страницы КАТАЛОГ
                 </div>
             </div>
             <?php
-                $static_children = new WP_Query(array(
-                        'numberposts' => -1,
-                        'post_type' => 'page',
-                        'post_parent' => get_the_ID(),
-                        'orderby' => 'menu_order'//Сортировать по дате
-                    )
-                );
-                    if($static_children->have_posts()) :
-                        while($static_children->have_posts()): $static_children->the_post();
-                            echo    '<div class="col-md-4">
-                                        <span class="caption"><strong>'.get_the_title().'</strong></span>
-                                            <a href="'.get_the_permalink().'" class="gallery-box gallery-style-2">'.get_the_post_thumbnail().'</a>
-                                    </div>';
-                        endwhile;
+                global $post;
+                $page_children = get_posts(array
+                                                (
+                                                'numberposts' => -1,
+                                                'post_type' => 'page',
+                                                'post_parent' => get_the_ID(),
+                                                'orderby' => 'menu_order'//Сортировать по дате
+                                                )
+                        );    
+                    if($page_children):                      
+                        foreach ($page_children as $post):
+                            setup_postdata($post);?>
+                                <div class="col-md-4">
+                                            <span class="caption"><strong><?php the_title();?></strong></span>
+                                                <a href="<?php the_permalink();?>" class="gallery-box gallery-style-2"><?php the_post_thumbnail();?></a>
+                                        </div>
+                      <?php  endforeach;              
                     endif;
-                    wp_reset_query();
+                wp_reset_postdata();       
             ?>
 
             <div class="col-md-12  text-center mt-30">
