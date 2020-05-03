@@ -73,29 +73,15 @@ if ($_POST && !empty($_POST)){
 }
 
 try{
-        $mail = new PHPMailer(true); // Создаем экземпляр класса PHPMailer
-        $mail->IsSMTP(); // Указываем режим работы с SMTP сервером
-        $mail->Host       = $smtp['host'];  // Host SMTP сервера: ip или доменное имя
-        $mail->SMTPDebug  = $smtp['debug'];  // Уровень журнализации работы SMTP клиента PHPMailer
-        $mail->SMTPAuth   = $smtp['auth'];  // Наличие авторизации на SMTP сервере
-        $mail->Port       = $smtp['port'];  // Порт SMTP сервера
-        $mail->SMTPSecure = $smtp['secure'];  // Тип шифрования. Например ssl или tls
-        $mail->CharSet="UTF-8";  // Кодировка обмена сообщениями с SMTP сервером
-        $mail->Username   = $smtp['username'];  // Имя пользователя на SMTP сервере
-        $mail->Password   = $smtp['password'];  // Пароль от учетной записи на SMTP сервере
-        $mail->AddAddress ($smtp['addAddress'], 'W');  // Адресат почтового сообщения
-        $mail->AddReplyTo($email_reply, 'Client');  // Альтернативный адрес для ответа
-        $mail->SetFrom($smtp['username'], $smtp['mail_name']);  // Адресант почтового сообщения
-        $mail->Subject = htmlspecialchars($title);  // Тема письма
-        $mail->MsgHTML($body); // Текст сообщения
+       
         
         if ($mail->send()) {
-            echo json_encode([
+            echo wp_json_encode([
                                 'status'=> true,
                                 'message' => 'Ожидайте. Мы свяжемся с вами!'
                             ]);
         }else {
-            echo json_encode([
+            echo wp_json_encode([
                                 'status'=> false,
                                 'message' => 'Ошибка! Попробуйте позже'
                             ]);

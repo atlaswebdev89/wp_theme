@@ -105,9 +105,9 @@ $('#call_request, #index-form, #form_message, #contact-form').submit(function ()
                       formData.append($(this).attr('name'), $(this).val());
             });
         formData.append('id', this.id);
-        var action = $(this).attr('action');               
+        formData.append('action', 'mail_event');
         $.ajax({
-            url: action,
+            url: myajax.url,
             type: 'POST',
             data: formData,
             cache: false,
@@ -133,7 +133,7 @@ $('#call_request, #index-form, #form_message, #contact-form').submit(function ()
                         $('.modal.in').modal( 'hide' );
                         $('p.msg').fadeOut("slow");
                     }, 2000); 
-                }else {                    
+                }else  {                    
                     //Включение кнопки и элементов формы
                     form.find('button,input').removeAttr('disabled');
                     form.find('.form-group').removeClass('has-success');
