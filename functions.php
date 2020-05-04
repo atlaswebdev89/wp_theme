@@ -1,5 +1,11 @@
 <?php
 /**
+ * Add log ajax errors
+ */
+if( WP_DEBUG && WP_DEBUG_DISPLAY && (defined('DOING_AJAX') && DOING_AJAX) ){
+    @ ini_set( 'display_errors', 1 );
+}
+/**
  * Register and Enqueue Styles.
  */
 
@@ -91,7 +97,7 @@ if (function_exists('register_nav_menu')) {
 //Кастомизация элементов меню
 add_filter( 'nav_menu_css_class', 'change_menu_item_css_classes', 10, 4 );
 function change_menu_item_css_classes($classes) {
-	return $classes[] ='';
+    return $classes[] ='';
 }
 add_filter( 'nav_menu_item_id', '__return_empty_string' );
 
@@ -145,82 +151,14 @@ add_action('template_redirect', 'custom_redirect_pagination_page');
 //Отправка почты через Ajax Smtp  (action = mail_event) 
  add_action('wp_ajax_mail_event', 'mail_function');
  add_action('wp_ajax_nopriv_mail_event', 'mail_function');
-
- //Функция очистки от тегов и лишних пробелов
-function clear_str($str) {
-    return strip_tags(trim($str));
-}
+//Подключаем файл отправки почты
+require_once get_template_directory().'/inc/Send-Mail.php';
 //Функция отправки почты Email
 function mail_function(){
-//Данные для отправки почты
-$smtp = require_once get_template_directory().'config/mail-config.php';
-//Массив названия форм на сайте (id формы)
-$array = require_once get_template_directory().'config/config-form.php';
-if ($_POST && !empty($_POST)){
-    //Очиста от тегов 
-    foreach ($_POST as &$item)
-        {
-            $item = clear_str($item);
-        }         
-    // Формируем двухмерный массив, в котором каждый массив имеет два поля: имя поля и значение
-    $i = 0;  
-    if (array_key_exists($_POST['id'], $array)) {       
-        $title = (isset($array[$_POST['id']]['title']) && !empty($array[$_POST['id']]['title']))?$array[$_POST['id']]['title']:'Сообщение с сайта';
-        foreach ($array[$_POST['id']]['fields'] as $key=>$item) {  
-                foreach ($_POST as $keys=>$post) {
-                    if (strtolower($keys) === $key) 
-                        {                       
-                                $result[$i]['name'] = $item;
-                                $result[$i]['value'] = $post;
-                                $i++;
-                            break;
-                        }
-            }
-        }
-    }else {
-        $title = 'Сообщение с сайта';
-        foreach ($_POST as $keys=>$post) {
-              $result[$i]['name'] = $keys;
-              $result[$i]['value'] = $post;
-            $i++; 
-        }
+    if(isset($_POST) && !empty($_POST)) {
+        error_log(print_r($_POST, 1));
+        send_mail($_POST);
     }
-    $email_reply =   (isset($_POST['EMAIL']) && !empty($_POST['EMAIL']))?($_POST['EMAIL']):$smtp['addreply'];   
-    
-        $body = "<!DOCTYPE html>"; // создаем тело письма
-        $body .= "<html><head>"; // структуру я минимизирую, шаблонов в сети много, либо создайте свой
-        $body .= "<meta charset='UTF-8' />";
-        $body .= "<title>".$title."</title>";
-        $body .= "</head><body>";
-        $body .= "<table><tr><td>";
-        $body .= "<table style='width:600px; border-spacing: 10px; border: 1px solid silver; padding: 10px; font-size:20px;'><tr><td>";
-        $body .= "<tr><td ><h3 style='text-align:center; border-bottom: 1px solid silver; color:#82b3f9;'>".$title."</h3></td></tr>"; 
-                foreach ($result as $value) {               
-                    $body .= "<tr><td><strong>".ucfirst($value['name']).":</strong> ".nl2br($value['value'])."</td></tr>"; 
-                } 
-        $body .= "<tr><td></td></tr>"; 
-        $body .= "<tr style='cellpadding: 10px;'><td style='text-align:center; border-top: 1px solid silver;'><em>All rights reserved | Copyright &copy; Atlas&Comp ".date("d-m-Y")."</em></td></tr>";
-        $body .= "</table></td></tr></table>";
-        $body .= "</body></html>";         
-}   
-        $headers = array(
-                        'content-type: text/html; charset=utf-8',
-                        'Reply-To:'. $email_reply
-            );
-        
-        if(wp_mail($smtp['from-mail'], htmlspecialchars($title), $body, $headers)) 
-           {
-                wp_send_json([
-                                    'status'=> true,
-                                    'message' => 'Ожидайте. Мы свяжемся с вами!'
-                                ]);
-                                
-            }else {
-                wp_send_json([
-                                    'status'=> false,
-                                    'message' => 'Ошибка! Попробуйте позже'
-                                ]);             
-            }  
  }
  
     
