@@ -6,8 +6,44 @@ if( WP_DEBUG && WP_DEBUG_DISPLAY && (defined('DOING_AJAX') && DOING_AJAX) ){
     @ ini_set( 'display_errors', 1 );
 }
 /**
+ * Delete meta data from headers
+ */
+remove_action('wp_head', 'rsd_link');
+remove_action('wp_head', 'wp_generator');
+remove_action('wp_head', 'feed_links',2);
+remove_action('wp_head', 'feed_links_extra',3);
+remove_action('wp_head', 'wlwmanifest_link');
+remove_action('wp_head', 'adjacent_posts_rel_link_wp_head');
+remove_action('wp_head', 'wp_shortlink_wp_head',10,0);
+remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
+// Удаляем информацию о REST API из заголовков HTTP и секции head
+remove_action( 'xmlrpc_rsd_apis', 'rest_output_rsd' );
+remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
+remove_action( 'template_redirect', 'rest_output_link_header', 11 );
+//dns-prefetch
+remove_action( 'wp_head', 'wp_resource_hints', 2 );
+//Emoji из WordPress
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('wp_print_styles', 'print_emoji_styles');
+/**
  * Register and Enqueue Styles.
  */
+//отключение всех архивов кроме рубрик и меток start
+function wph_disable_all_archives($false, $wp_query) {
+    if (is_archive()) {
+            $wp_query->set_404();
+            status_header( 404 );
+            nocache_headers();
+        return true;
+    }
+    return $false;
+}
+//удаление ссылки на архив автора
+function wph_remove_author_link($content) {return home_url();}
+
+add_action('pre_handle_404', 'wph_disable_all_archives', 10, 2);
+add_filter('author_link', 'wph_remove_author_link');
+//отключение всех архивов кроме рубрик и меток end
 
 /*
  * Функции для добавления версии к подключаемым стилям и скриптам С помощью данной функции нет необходимости очищать кеш браузера
@@ -61,7 +97,6 @@ function niko_register_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'niko_register_scripts' );
 
-
 /**
  * Подключение FancyBox для страниц каталога
  */
@@ -74,7 +109,7 @@ function niko_register_fancy () {
 }
 
 /**
-* Подключение скиптов для старницы О нас
+* Подключение скриптов для старницы "О нас"
  */
 add_action( 'wp_enqueue_scripts', 'niko_register_count' );
 function niko_register_count () {
