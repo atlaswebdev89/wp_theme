@@ -1,6 +1,9 @@
 <?php get_header(); ?>
-<?php the_post();?>
+
 <div id="wrap">
+    <?php if (have_posts()) {
+        while(have_posts()){
+            the_post(); ?>
     <section id="desc-text-btn-quartbg" class="light pt-200 pb-50 text-left">
         <div class="container">
             <div class="row">
@@ -14,6 +17,15 @@
         </div>
         <div class="bg"></div>
     </section>
+    <?php } ?>
+    <div class="navigation">
+        <?php echo paginate_links();?>
+        <div class="next-posts"><?php next_posts_link(); ?></div>
+        <div class="prev-posts"><?php previous_posts_link(); ?></div>
+    </div>
+    <?php } ?>
+
+
     <?php
     //Получим slug текущей страницы
     $slug = get_post_field( 'post_name');

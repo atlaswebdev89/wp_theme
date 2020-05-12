@@ -13,6 +13,8 @@
                                         </div>
                                 </div>   			
                                 <div class="bg"></div>
+            <ul><?php wp_list_categories(); ?></ul>
+
         </section>
         <?php 
             //Получим slug текущей страницы
